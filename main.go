@@ -63,8 +63,6 @@ func addFolderHeaderItem(name string) (string, error){
 
 // Build page content from the folder info passed
 func contentLoop(contents []os.FileInfo, p string) (string, error){
-  
-  p = path.Base(p)
 
   var body string = ""
   
@@ -72,20 +70,20 @@ func contentLoop(contents []os.FileInfo, p string) (string, error){
     if contents[item].Mode().IsDir() {
       if (string(contents[item].Name()[0])) != "." {
         b, _ := addFolderHeaderItem(contents[item].Name())
-        body = body + b
+        body = body + b //+ `<div class="list-group">`
       
         c, err := getFilesInfo(Static + contents[item].Name() + "/")
         if err != nil {
           return "", err
         }
         b, _ = contentLoop(c, contents[item].Name() + "/")
-        body = body + b
+        body = body + b //+ `</div>` 
       }
       
     } else {
       if (string(contents[item].Name()[0])) != "." {
         name := strings.TrimSuffix(contents[item].Name(), path.Ext(contents[item].Name()))
-        b, _ := addFileItem(p + "/" + name, name)
+        b, _ := addFileItem(path.Base(p) + "/" + name, name)
         body = body + b
       }
     }
