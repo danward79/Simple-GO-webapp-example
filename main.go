@@ -53,7 +53,7 @@ func getFilesInfo(path string) ([]os.FileInfo, error){
 
 // Add an HTML line for a file
 func addFileItem(path string, name string) (string, error){
-  return `<a href="/howto/` + path + `" class="list-group-item">` + name + `</a><br>`, nil
+  return `<a href="/howto/` + path + `" class="list-group-item">` + name + `</a>`, nil
 }
 
 // Add an HTML line for a folder
@@ -70,14 +70,14 @@ func contentLoop(contents []os.FileInfo, p string) (string, error){
     if contents[item].Mode().IsDir() {
       if (string(contents[item].Name()[0])) != "." {
         b, _ := addFolderHeaderItem(contents[item].Name())
-        body = body + b //+ `<div class="list-group">`
+        body = body + b + `<div class="list-group">`
       
         c, err := getFilesInfo(Static + contents[item].Name() + "/")
         if err != nil {
           return "", err
         }
         b, _ = contentLoop(c, contents[item].Name() + "/")
-        body = body + b //+ `</div>` 
+        body = body + b + `</div>` 
       }
       
     } else {
@@ -89,7 +89,7 @@ func contentLoop(contents []os.FileInfo, p string) (string, error){
     }
     
   }
-  
+
   return body, nil
 }
 
@@ -101,10 +101,10 @@ func articlesHandler(w http.ResponseWriter, r *http.Request) {
     return 
   }
   
-  var body string = `<div class="list-group">`
+  var body string 
   
   b, _ := contentLoop(contents, Static)
-  body = body + b + `</div>`  
+  body = body + b 
   
   page.Body = template.HTML(body)
   page.Title = strings.Title("articles")
