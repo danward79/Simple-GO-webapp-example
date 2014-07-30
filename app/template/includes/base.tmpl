@@ -1,0 +1,28 @@
+{{ define "base" }}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" class="no-js">
+
+  <head>
+    
+    {{ template "head" . }}
+    
+  </head>
+  
+  <body>
+    
+    {{ template "menu" . }}
+
+    <div class="container" role="main">
+    
+        {{ template "content" . }}
+      
+    </div>
+    
+    {{ template "scripts" . }}
+    
+  </body>
+  
+</html>
+
+{{ end }}
