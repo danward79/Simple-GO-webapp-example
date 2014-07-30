@@ -83,9 +83,11 @@ func contentLoop(contents []os.FileInfo, p string) (string, error){
       }
       
     } else {
-      name := strings.TrimSuffix(contents[item].Name(), path.Ext(contents[item].Name()))
-      b, _ := addFileItem(p + "/" + name, name)
-      body = body + b
+      if (string(contents[item].Name()[0])) != "." {
+        name := strings.TrimSuffix(contents[item].Name(), path.Ext(contents[item].Name()))
+        b, _ := addFileItem(p + "/" + name, name)
+        body = body + b
+      }
     }
     
   }
