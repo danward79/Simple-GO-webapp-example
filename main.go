@@ -11,9 +11,11 @@ import (
 	"path"
 	"strings"
 
+	"github.com/danward79/simpleweb"
 	"github.com/drone/routes"
 )
 
+//Default values to use at the moment
 const (
 	Template string = "./app/template/"
 	Static   string = "./app/static/"
@@ -64,7 +66,7 @@ func addFolderHeaderItem(name string) (string, error) {
 // Build page content from the folder info passed
 func contentLoop(contents []os.FileInfo, p string) (string, error) {
 
-	var body string = ""
+	var body string
 
 	for item := range contents {
 		if contents[item].Mode().IsDir() {
